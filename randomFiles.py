@@ -18,7 +18,7 @@ def randomchoose(names,file_block):
 				chossen.append(temp)
 				count += 1
 			else:
-				print "Duplicate found in ",temp
+				print "Duplication found in ",temp
 	return chossen
 
 
