@@ -2,6 +2,7 @@ import module as bitch
 import anydbm
 import pickle
 import random
+import platform
 
 db_name = "files_browsed.db"
 db = anydbm.open(db_name,"c")
@@ -31,12 +32,19 @@ def reset_database():
 	print "Your database is being backup..."
 	return bitch.pipe(cmd)
 
-def scan(dirname="",file_block=5,destination="/home/tantai/ao",type_allowed = ".mp4"):
+def scan(dirname="",file_block=5,destination="/home/tantai/ao",type_allowed = ".txt"):
 	names = bitch.walk(dirname)
-	chosen = randomchoose(names,file_block)
-	for file in chosen:
-		db[file] = bitch.get_time()
-		copyfile(file,destination)
+	chosen = randomchoose(names,file_block,type_allowed)
+	os = platform.system()
+	if os == "Linuxs":
+		for file in chosen:
+			db[file] = bitch.get_time()
+			copyfile(file,destination)
+	else:
+		fin = open(destination+"/files.txt","w+")
+		for file in chosen:
+			db[file] = bitch.get_time()
+			fin.write(file+"\n")
 	print "Done!"
 
 
