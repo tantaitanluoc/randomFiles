@@ -1,4 +1,5 @@
 import os
+import time
 import hashlib
 def walk(dirname):
 	names = []
@@ -17,6 +18,9 @@ def md5_checksum(filename):
 			# read chunks of 4096 bytes sequentially to fit the whole file in memory
 			hash_md5.update(chunk)
 	return hash_md5.hexdigest()
+
+def get_time():
+	return time.asctime(time.localtime(time.time())) # =))
 
 def main():
 	print walk("D:\\py_test")
