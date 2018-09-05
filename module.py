@@ -11,6 +11,9 @@ def walk(dirname):
 			names.extend(walk(path))
 	return names
 
+def check_suffix(filename,suffix):
+	return filename.endswith(suffix)
+
 def md5_checksum(filename):
 	hash_md5 = hashlib.md5()
 	with open(filename,"rb") as fuck:
@@ -21,6 +24,13 @@ def md5_checksum(filename):
 
 def get_time():
 	return time.asctime(time.localtime(time.time())) # =))
+
+def pipe(cmd):
+	bash = os.popen(cmd)
+	result = bash.read()
+	status = bash.close()
+	assert status is None # to makes sure the bash shell command works fine
+	return result,status
 
 def main():
 	print walk("D:\\py_test")
