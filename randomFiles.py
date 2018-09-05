@@ -5,9 +5,9 @@ import random
 
 db_name = "files_browsed.db"
 db = anydbm.open(db_name,"c")
-def randomchoose(names,file_block):
+def randomchoose(names,file_block,type_allowed):
 	# choose randomly [file_block] files from a file list
-	chossen = []
+	chosen = []
 	flag = True
 	count = 0
 	while(flag):
@@ -17,10 +17,10 @@ def randomchoose(names,file_block):
 			temp = random.choice(names)
 			hashed_value = bitch.md5_checksum(temp)
 			# store in md5 value so don't worry about the same file but with different names
-			if temp not in db:
-				chossen.append(hashed_value) 
+			if hashed_value not in db and bitch.check_suffix(temp,type_allowed):
+				chosen.append(temp) 
 				count += 1
-	return chossen
+	return chosen
 
 def copyfile(file,destination):
 	cmd = "cp " + file+ " "+destination
@@ -28,21 +28,20 @@ def copyfile(file,destination):
 
 def reset_database():
 	cmd = "mv " +db_name+" "+db_name+".bak" # backup database
-	print "Your database is being reset..."
+	print "Your database is being backup..."
 	return bitch.pipe(cmd)
 
-def scan(dirname="",file_block=5,destination="/home/tantai/ao"):
+def scan(dirname="",file_block=5,destination="/home/tantai/ao",type_allowed = ".mp4"):
 	names = bitch.walk(dirname)
-	chossen = randomchoose(names,file_block)
-	for file in chossen:
+	chosen = randomchoose(names,file_block)
+	for file in chosen:
 		db[file] = bitch.get_time()
 		copyfile(file,destination)
 	print "Done!"
 
 
 if __name__ == '__main__':
-	# scan("/run/media/tantai/DATA/py_test/review/")
-	reset_database()
+	scan("/run/media/tantai/DATA/py_test/review/")
 
 
 
