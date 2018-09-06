@@ -13,7 +13,7 @@ def randomchoose(names,file_block,type_allowed):
 	flag = True
 	count = 0
 	while(flag):
-		if count > file_block:
+		if count >= file_block:
 			flag = False
 		else:
 			temp = random.choice(names)
@@ -35,7 +35,7 @@ def reset_database():
 	print "Your database is being backup..."
 	return bitch.pipe(cmd)
 
-def scan(dirname="",file_block=5,destination="/home/tantai/ao",type_allowed = ".mp4"):
+def scan(dirname="",file_block=5,destination="/home/tantai/opt",type_allowed = ".mp4"):
 	names = bitch.walk(dirname)
 	chosen = randomchoose(names,file_block,type_allowed)
 	os = platform.system()
@@ -53,7 +53,7 @@ if __name__ == '__main__':
 	if len(sys.argv) > 1 and str(sys.argv[1]) == "reset":
 		reset_database()
 	else:
-		scan("/home/tantai/bin")
+		scan("/home/tantai/ao")
 
 
 
