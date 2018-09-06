@@ -27,7 +27,6 @@ def randomchoose(names,file_block,type_allowed):
 
 def copyfile(file,destination):
 	cmd = "cp '" + file+ "' '"+destination+"'"
-	print "Please wait... ",
 	return bitch.pipe(cmd)
 
 def reset_database():
