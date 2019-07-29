@@ -1,4 +1,4 @@
-import module as bitch
+import module as mdl
 import anydbm
 import pickle
 import random
@@ -17,25 +17,25 @@ def randomchoose(names,file_block,type_allowed):
 			flag = False
 		else:
 			temp = random.choice(names)
-			hashed_value = bitch.md5_checksum(temp)
+			hashed_value = mdl.md5_checksum(temp)
 			# store in md5 value so don't worry about the same file but with different names
-			if hashed_value not in db and bitch.check_suffix(temp,type_allowed):
-				db[hashed_value] = bitch.get_time()
+			if hashed_value not in db and mdl.check_suffix(temp,type_allowed):
+				db[hashed_value] = mdl.get_time()
 				chosen.append(temp) 
 				count += 1
 	return chosen
 
 def copyfile(file,destination):
 	cmd = "cp '" + file+ "' '"+destination+"'"
-	return bitch.pipe(cmd)
+	return mdl.pipe(cmd)
 
 def reset_database():
 	cmd = "mv " +db_name+" "+db_name+".bak" # backup database
 	print "Your database is being backup..."
-	return bitch.pipe(cmd)
+	return mdl.pipe(cmd)
 
 def scan(dirname="",file_block=5,destination="/home/tantai/opt",type_allowed = ".mp4"):
-	names = bitch.walk(dirname)
+	names = mdl.walk(dirname)
 	chosen = randomchoose(names,file_block,type_allowed)
 	os = platform.system()
 	if os == "Linux":

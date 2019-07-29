@@ -16,8 +16,8 @@ def check_suffix(filename,suffix):
 
 def md5_checksum(filename):
 	hash_md5 = hashlib.md5()
-	with open(filename,"rb") as fuck:
-		for chunk in iter(lambda: fuck.read(4096),b""):
+	with open(filename,"rb") as buffer:
+		for chunk in iter(lambda: buffer.read(4096),b""):
 			# read chunks of 4096 bytes sequentially to fit the whole file in memory
 			hash_md5.update(chunk)
 	return hash_md5.hexdigest()
